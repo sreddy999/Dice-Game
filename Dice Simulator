@@ -1,0 +1,103 @@
+import random
+
+def prob_formula(num):
+    probs = [0,1,0.5]
+    for i in range(num):
+        probs.append(1 - probs[-1]/2)
+    print(probs)
+
+def prob_general(n):
+    print(((2**n) - ((-1)**n))/(3*2**(n-1)))
+
+
+def base(num):
+    hit = 0
+    missed = 0
+    for i in range(1000000):
+        on = 1
+        landed = []
+        while on < num+1:
+            landed.append(on)
+            move = random.randint(1,2)
+ 
+            on += move
+        if num in landed:
+            hit += 1
+        else:
+            missed += 1
+    print(",")
+    print(hit)
+    print(missed)
+
+
+def weighted(num,p_1):
+    hit = 0
+    missed = 0
+    for i in range(1000000):
+        on = 1
+        landed = []
+        while on < num+1:
+            landed.append(on)
+            poss_moves = [1,2]
+            move = random.choices(poss_moves, weights = (p_1, 1 - p_1), k = 1)
+
+            on += move[0]
+        if num in landed:
+            hit += 1
+        else:
+            missed += 1
+    print(",")
+    print(hit)
+    print(missed)
+    
+
+def large_dice(num,highest):
+    hit = 0
+    missed = 0
+    for i in range(810000):
+        on = 1
+        landed = []
+        while on < num+1:
+            landed.append(on)
+            move = random.randint(1,highest)
+
+            on += move
+        if num in landed:
+            hit += 1
+        else:
+            missed += 1
+    print(",")
+    print(hit)
+    print(missed)
+
+def cricket(num,highest,probs):
+    hit = 0
+    missed = 0
+    for i in range(100000):
+        on = 1
+        landed = []
+        while on < num+1:
+            landed.append(on)
+            poss_moves = []
+            for i in range(highest):
+                poss_moves.append(i+1)
+            move = random.choices(poss_moves, weights = (probs), k = 1)
+
+            on += move[0]
+        if num in landed:
+            hit += 1
+        else:
+            missed += 1
+    print(",")
+    print(hit)
+    print(missed)
+            
+
+
+
+base(25)
+prob_formula(25)
+prob_general(25)
+weighted(50,0.8)
+large_dice(25,3)
+cricket(100,6,[0.5,0.1,0.05,0.25,0,0.1])   
